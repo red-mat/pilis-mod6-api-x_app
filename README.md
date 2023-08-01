@@ -1,7 +1,6 @@
-# EXPRESS + TS + VITEST + TSUP + TS-NODE
+# X-App api
 
-Template express project
-
+x app api
 ## Getting started
 
 - npm 1 or pnpm i
