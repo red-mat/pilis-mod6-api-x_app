@@ -1,4 +1,4 @@
-name: ticketswift
+name: db-x-app
 services:
   db:
     image: mysql
