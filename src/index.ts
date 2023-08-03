@@ -1,7 +1,9 @@
 import app from "app";
+import { API_PORT } from "@/shared/environment";
 
 async function main() {
-  const port = 3000;
+  const port = API_PORT;
+
   try {
     app.listen(port);
   } catch (error) {
