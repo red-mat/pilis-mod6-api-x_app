@@ -1,6 +1,8 @@
 import { UserData } from "@/users/core/types";
 import { Request } from "express";
 
-export interface AuthRequest extends Request {
+interface IAuthRequest extends Request {
   user: UserData;
 }
+
+export type AuthRequest = IAuthRequest | any;
