@@ -11,7 +11,7 @@ const options = {
 export default new Strategy(options, async (payload: UserData, done) => {
   try {
     const { id } = payload;
-    const userEntity = await UserEntity.countBy({ id });
+    const userEntity = await UserEntity.countBy({ id, isDeleted: false });
 
     if (!userEntity) return done(null, false);
 
