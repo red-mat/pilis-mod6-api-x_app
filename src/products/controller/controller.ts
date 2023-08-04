@@ -21,7 +21,6 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   const { name, price, stock }: ItemProduct = req.body;
-  console.log(name)
 
   try {
     const newProduct: Product = new Product();
