@@ -1,7 +1,8 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { UserModel } from "./types";
 
 @Entity()
-class UserEntity extends BaseEntity {
+class UserEntity extends BaseEntity implements UserModel {
   @PrimaryGeneratedColumn()
   id!: number;
 
