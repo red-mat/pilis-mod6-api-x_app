@@ -5,4 +5,5 @@ export interface Environment {
   DB_PORT: number;
   DB_NAME: string;
   DB_PASS: string;
+  JWT_SECRET_KEY: string;
 }

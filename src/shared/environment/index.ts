@@ -12,6 +12,7 @@ export const DB_HOST = env.DB_HOST ?? "localhost";
 export const DB_PORT = Number(env.DB_PORT);
 export const DB_NAME = env.DB_NAME ?? "db";
 export const DB_PASS = env.DB_PASS ?? "password";
+export const JWT_SECRET_KEY = env.JWT_SECRET_KEY ?? "secret_key";
 
 const ENV: Environment = {
   API_PORT,
@@ -20,6 +21,7 @@ const ENV: Environment = {
   DB_PORT,
   DB_NAME,
   DB_PASS,
+  JWT_SECRET_KEY,
 };
 
 export default ENV;
