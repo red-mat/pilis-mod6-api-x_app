@@ -12,6 +12,7 @@
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
     "types": ["vitest/globals"]
   },
   "exclude": ["node_modules", "dist"]
