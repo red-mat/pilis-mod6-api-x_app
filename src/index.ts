@@ -1,7 +1,8 @@
 import "reflect-metadata";
 
-import { API_PORT } from "@/shared/environment";
 import AppDataSource from "@/shared/data-source";
+import { API_PORT } from "@/shared/environment";
+import { userSetup } from "@/users/core";
 
 import app from "app";
 
@@ -10,6 +11,8 @@ async function main() {
 
   try {
     await AppDataSource.initialize();
+    await userSetup();
+
     app.listen(port);
   } catch (error) {
     console.log(error);
