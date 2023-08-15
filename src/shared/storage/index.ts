@@ -1,36 +1,37 @@
 import fs from "fs";
 import path from "path";
 
-const PATH_STORAGE = path.join("./", "storage");
+type FilePath = string | null;
+const STORAGE_PATH = path.resolve("./", "storage");
 class Storage {
   private readonly path: string;
 
   static setup() {
-    const isPathStorage = fs.existsSync(PATH_STORAGE);
+    const isPathStorage = fs.existsSync(STORAGE_PATH);
     if (isPathStorage) return;
-    fs.mkdirSync(PATH_STORAGE);
+    fs.mkdirSync(STORAGE_PATH);
   }
 
   constructor(folder: string) {
-    this.path = path.join(PATH_STORAGE, folder);
+    this.path = path.join(STORAGE_PATH, folder);
     const isPathFolder = fs.existsSync(this.path);
     if (isPathFolder) return;
     fs.mkdirSync(this.path);
   }
 
-  save(file: Buffer, name: string) {
+  save(file: Buffer, name: string): FilePath {
     const filePath = path.join(this.path, name);
 
     try {
       fs.writeFileSync(filePath, file);
-      return true;
+      return filePath;
     } catch (error) {
       console.log((error as Error).message);
-      return false;
+      return null;
     }
   }
 
-  delete(name: string) {
+  delete(name: string): void {
     const filePath = path.join(this.path, name);
 
     try {
@@ -40,14 +41,14 @@ class Storage {
     }
   }
 
-  exists(name: string) {
+  exists(name: string): boolean {
     const filePath = path.join(this.path, name);
     return fs.existsSync(filePath);
   }
 
-  reWrite(file: Buffer, name: string) {
+  reWrite(file: Buffer, name: string): FilePath {
     if (this.exists(name)) this.delete(name);
-    this.save(file, name);
+    return this.save(file, name);
   }
 }
 export default Storage;
