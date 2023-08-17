@@ -4,6 +4,7 @@ import UserEntity from "./UserEntity";
 const DEFAULT_USER = {
   username: "admin",
   password: "admin",
+  avatar: null,
 };
 
 export default async () => {

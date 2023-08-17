@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
-import { JWT_SECRET_KEY } from "@/shared/environment";
-import { UserCredentials } from "../core/types";
+import { API_PORT, API_ROOT, JWT_SECRET_KEY } from "@/shared/environment";
+import { UserCredentials, UserData } from "../core/types";
 import { User, UserEntity } from "../core";
 
 function message(text: string) {
@@ -12,10 +12,16 @@ async function getUser(username: string): Promise<UserEntity | null> {
   return await UserEntity.findOneBy({ username });
 }
 
+function getAvatar(user: UserEntity) {
+  if (!user.avatar) return null;
+  return `http://localhost:${API_PORT}${API_ROOT}/v1/users/avatar/${user.id}`;
+}
+
 function generarToken(user: UserEntity): string {
-  const payload = {
+  const payload: UserData = {
     id: user.id,
     username: user.username,
+    avatar: getAvatar(user),
   };
   return jwt.sign(payload, JWT_SECRET_KEY);
 }
