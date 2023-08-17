@@ -1,3 +1,4 @@
+import { OrderDetail } from "@/orders/core/OrderDetailEntity";
 import {
   Entity,
   Column,
@@ -8,6 +9,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 
 
@@ -31,6 +33,6 @@ export class Product extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // @ManyToOne(() => UserAdmin, (userAdmin: UserAdmin) => userAdmin.product)
-  // product: UserAdmin
+  @OneToMany(() => OrderDetail, (orderDetail: OrderDetail) => orderDetail.product)
+  orderDetail: OrderDetail
 };

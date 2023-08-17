@@ -14,7 +14,9 @@ async function main() {
     await AppDataSource.initialize();
     await userSetup();
     Storage.setup();
-    app.listen(port);
+    app.listen(port, () => {
+      console.log("Server started")
+    });
   } catch (error) {
     console.log(error);
   }
