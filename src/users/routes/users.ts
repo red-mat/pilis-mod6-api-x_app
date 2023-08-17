@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { authenticate } from "../middleware/authenticate";
-import { updated } from "../controllers";
+import { avatar, updated } from "../controllers";
 
 const PATH = "/users";
 const route = Router();
 
-route.use(PATH, authenticate);
-route.put(PATH, updated);
+route.put(PATH, authenticate, updated);
+route.get("/users/avatar/:id", avatar);
 
 export default route;
