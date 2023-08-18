@@ -16,7 +16,7 @@ class UserEntity extends BaseEntity implements UserModel {
   isDeleted!: boolean;
 
   @Column({ default: null })
-  avatar: string | null;
+  avatar: string;
 }
 
 export default UserEntity;

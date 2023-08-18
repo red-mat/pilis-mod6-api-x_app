@@ -5,7 +5,7 @@ import { API_PORT } from "@/shared/environment";
 import { userSetup } from "@/users/core";
 
 import app from "app";
-import Storage from "./shared/storage";
+import { Storage } from "./shared/storage";
 
 async function main() {
   const port = API_PORT;
