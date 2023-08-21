@@ -17,6 +17,14 @@ x app api
 
 - **GET**: get user token
 
+### /api/users/
+
+- **PUT** _(protected)_: edit user data
+
+### /api/users/avatar/:id
+
+- **GET**: get user avatar image
+
 ### api/products
 
 - **GET**: get paginated all products (actives not deleted)
