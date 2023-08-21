@@ -42,7 +42,10 @@ async function updated(req: AuthRequest, res: Response) {
 
   if (data.username) user.username = data.username;
   if (data.password) user.password = data.password;
-  if (img) user.avatar = updateAvatar(req.file, id);
+  if (img) {
+    if (userEntity.avatar) Storage.delete(userEntity.avatar);
+    user.avatar = updateAvatar(req.file, id);
+  }
 
   userEntity.username = user.username;
   userEntity.password = user.password;
