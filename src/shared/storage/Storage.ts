@@ -21,6 +21,18 @@ class Storage {
     }
   }
 
+  static delete(filePath: string) {
+    try {
+      fs.rmSync(filePath);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  static exists(filePath: string): boolean {
+    return fs.existsSync(filePath);
+  }
+
   constructor(folder: string) {
     this.path = path.join(STORAGE_PATH, folder);
     const isPathFolder = fs.existsSync(this.path);
