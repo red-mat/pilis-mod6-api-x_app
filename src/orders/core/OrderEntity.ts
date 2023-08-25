@@ -12,7 +12,6 @@ import { Status } from "./constans";
 import { UserEntity } from "@/users/core";
 import { OrderDetail } from "./OrderDetailEntity";
 
-
 @Entity()
 export class Order extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
@@ -21,19 +20,19 @@ export class Order extends BaseEntity {
   @Column({
     type: "enum",
     enum: Status,
-    default: Status.PENDING
+    default: Status.PENDING,
   })
   status: Status;
 
   @CreateDateColumn()
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt: Date;
 
   @ManyToOne(() => UserEntity, (user: UserEntity) => user.order)
-  user: UserEntity | number
+  user: UserEntity | string;
 
   @OneToMany(() => OrderDetail, (orderDetail: OrderDetail) => orderDetail.order)
-  orderDetail: OrderDetail[]
-};
+  orderDetail: OrderDetail[];
+}

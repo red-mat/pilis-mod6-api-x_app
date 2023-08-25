@@ -6,7 +6,7 @@ import mime from "mime";
 import { Storage } from "@/shared/storage";
 
 const message = (message: string) => ({ message });
-const getEntity = async (id: number) =>
+const getEntity = async (id: string) =>
   await UserEntity.findOneBy({ id, isDeleted: false });
 const updateAvatar = (
   file: Express.Multer.File,

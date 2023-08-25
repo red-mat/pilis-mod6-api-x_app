@@ -8,7 +8,7 @@ export interface UserCredentials {
   password: string;
 }
 export interface UserData {
-  id: number;
+  id: string;
   username: string;
   avatar: string | null;
 }
