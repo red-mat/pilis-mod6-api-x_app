@@ -6,8 +6,6 @@ import mime from "mime";
 import { Storage } from "@/shared/storage";
 
 const message = (message: string) => ({ message });
-const getEntity = async (id: string) =>
-  await UserEntity.findOneBy({ id, isDeleted: false });
 const updateAvatar = (
   file: Express.Multer.File,
   userId: number
@@ -29,30 +27,22 @@ async function updated(req: AuthRequest, res: Response) {
   if (!data.username && !data.password && !img)
     return res.status(400).send(message("params not valid"));
 
-  let userEntity;
-  try {
-    userEntity = await getEntity(id);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send(message("internal error fail updated user"));
-  }
-  if (!userEntity) return res.status(400).send(message("user not valid"));
-
-  const user = new User(userEntity);
+  const user = await User.Find(id);
+  if (!user) return res.status(400).send(message("user not valid"));
 
   if (data.username) user.username = data.username;
   if (data.password) user.password = data.password;
   if (img) {
-    if (userEntity.avatar) Storage.delete(userEntity.avatar);
+    if (user.avatar) Storage.delete(user.avatar);
     user.avatar = updateAvatar(req.file, id);
   }
 
-  userEntity.username = user.username;
-  userEntity.password = user.password;
-  userEntity.avatar = user.avatar;
+  user.username = user.username;
+  user.password = user.password;
+  user.avatar = user.avatar;
 
   try {
-    await userEntity.save();
+    await user.save();
   } catch (error) {
     console.log(error);
     return res.status(500).send(message("internal error fail updated user"));

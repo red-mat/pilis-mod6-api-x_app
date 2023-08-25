@@ -12,9 +12,5 @@ export default async () => {
   if (users) return;
 
   const user = User.New(DEFAULT_USER);
-
-  const userEntity = new UserEntity();
-  userEntity.username = user.username;
-  userEntity.password = user.password;
-  await userEntity.save();
+  await user.save();
 };
