@@ -8,7 +8,7 @@ import {
 import { UserModel } from "./types";
 import { Order } from "@/orders/core/OrderEntity";
 
-@Entity()
+@Entity({ name: "user" })
 class UserEntity extends BaseEntity implements UserModel {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
