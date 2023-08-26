@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import { UserCredentials, UserModel } from "./types";
 import UserEntity from "./UserEntity";
+import { Storage } from "@/shared/storage";
+import mime from "mime";
 
 const SALT_ROUNDS = 10;
 const hashed = (text: string) => bcrypt.hashSync(text, SALT_ROUNDS);
@@ -47,12 +49,37 @@ class User {
     }
   }
 
-  get avatar() {
-    return this._entity.avatar;
+  get avatar(): string | null {
+    const storage = new Storage("avatar");
+    const name = this._entity.avatar;
+
+    if (!name) return null;
+
+    const path = storage.getPath(name);
+    if (!path) throw new Error(`Avatar not exist: ${name}`);
+
+    return path;
   }
 
-  set avatar(x: string | null) {
-    this._entity.avatar = x;
+  set avatar(x: Express.Multer.File | null) {
+    if (!x) {
+      this._entity.avatar = x;
+      return;
+    }
+
+    const currentAvatar = this._entity.avatar;
+    const storage = new Storage("avatar");
+    const buffer = x.buffer;
+    const format = mime.extension(x.mimetype);
+    const name = `${this._entity.id}.${format}`;
+
+    if (currentAvatar && storage.exists(currentAvatar))
+      storage.delete(currentAvatar);
+
+    const path = storage.save(buffer, name);
+    if (!path) return;
+
+    this._entity.avatar = name;
   }
 
   get username() {

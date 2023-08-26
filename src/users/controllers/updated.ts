@@ -1,22 +1,9 @@
 import { Response } from "express";
-import { User, UserEntity } from "../core";
+import { User } from "../core";
 import { UserModel } from "../core/types";
 import { AuthRequest } from "../middleware/authenticate";
-import mime from "mime";
-import { Storage } from "@/shared/storage";
 
 const message = (message: string) => ({ message });
-const updateAvatar = (
-  file: Express.Multer.File,
-  userId: number
-): string | null => {
-  const storage = new Storage("avatar");
-  const format = mime.extension(file.mimetype);
-  const buffer = file.buffer;
-  const name = `${userId}.${format}`;
-
-  return storage.reWrite(buffer, name);
-};
 
 async function updated(req: AuthRequest, res: Response) {
   const img = req.file;
@@ -32,14 +19,7 @@ async function updated(req: AuthRequest, res: Response) {
 
   if (data.username) user.username = data.username;
   if (data.password) user.password = data.password;
-  if (img) {
-    if (user.avatar) Storage.delete(user.avatar);
-    user.avatar = updateAvatar(req.file, id);
-  }
-
-  user.username = user.username;
-  user.password = user.password;
-  user.avatar = user.avatar;
+  if (img) user.avatar = img;
 
   try {
     await user.save();

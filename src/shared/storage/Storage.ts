@@ -51,6 +51,11 @@ class Storage {
     }
   }
 
+  getPath(name: string): string | null {
+    if (!this.exists(name)) return null;
+    return path.join(this.path, name);
+  }
+
   save(file: Buffer, name: string): FilePath {
     const filePath = path.join(this.path, name);
 
