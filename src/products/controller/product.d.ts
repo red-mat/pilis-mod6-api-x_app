@@ -1,10 +1,11 @@
-import { Product } from "../core/Entity";
+import { Product } from "../core/ProductEntity";
 
 export type ItemProduct = {
   id: string
   name: string
   price: number
   stock: number
+  category: string
 };
 
 export type ProductDetail = {

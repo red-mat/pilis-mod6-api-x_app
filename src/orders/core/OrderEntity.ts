@@ -5,11 +5,9 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
   OneToMany,
 } from "typeorm";
 import { Status } from "./constans";
-import { UserEntity } from "@/users/core";
 import { OrderDetail } from "./OrderDetailEntity";
 
 @Entity()
@@ -29,9 +27,6 @@ export class Order extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @ManyToOne(() => UserEntity, (user: UserEntity) => user.order)
-  user: UserEntity | string;
 
   @OneToMany(() => OrderDetail, (orderDetail: OrderDetail) => orderDetail.order)
   orderDetail: OrderDetail[];

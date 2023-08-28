@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from "typeorm"
 import { Order } from "./OrderEntity"
-import { Product } from "@/products/core/Entity"
+import { Product } from "@/products/core/ProductEntity"
 
 @Entity()
 export class OrderDetail extends BaseEntity {
