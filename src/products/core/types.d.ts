@@ -1,4 +1,4 @@
-import { OrderDetail } from "./OrderDetailEntity";
+import { OrderDetail } from "../../orders/core/OrderDetailEntity";
 
 export type BodyOrder = {
   productId: string;

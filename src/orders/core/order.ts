@@ -1,6 +1,6 @@
-import { Product } from "@/products/core/Entity";
+import { Product } from "@/products/core/ProductEntity";
 import { Order } from "./OrderEntity";
-import { BodyOrder, OrderItem } from "./types";
+import { BodyOrder, OrderItem } from "../../products/core/types";
 import { UserEntity } from "@/users/core";
 import { OrderDetail } from "./OrderDetailEntity";
 import { statuses } from "./constans";
@@ -61,7 +61,6 @@ export default class OrderService {
       let orderDetailList = await this._validateProductAndBuildDetail(products);
 
       const newOrder = new Order();
-      newOrder.user = user.id;
       await newOrder.save();
 
       for (const detail of orderDetailList) {
