@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
-import { Request, Response } from "express";
 import { API_PORT, API_ROOT, JWT_SECRET_KEY } from "@/shared/environment";
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { User } from "../core";
 import { UserCredentials, UserData, UserModel } from "../core/types";
-import { User, UserEntity } from "../core";
 
 interface UserDto extends UserModel {
   id: string;
@@ -10,10 +10,6 @@ interface UserDto extends UserModel {
 
 function message(text: string) {
   return { message: text };
-}
-
-async function getUser(username: string): Promise<UserEntity | null> {
-  return await UserEntity.findOneBy({ username });
 }
 
 function getAvatar(user: UserDto) {
