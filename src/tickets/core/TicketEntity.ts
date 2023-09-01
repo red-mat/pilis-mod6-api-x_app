@@ -1,5 +1,6 @@
 import { Order } from "@/orders/core/OrderEntity";
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -9,7 +10,7 @@ import {
 } from "typeorm";
 
 @Entity({ name: "ticket" })
-class TicketEntity {
+class TicketEntity extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
