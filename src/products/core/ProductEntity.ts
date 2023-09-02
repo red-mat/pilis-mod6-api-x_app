@@ -11,7 +11,7 @@ import {
 
 
 @Entity()
-export class Product extends BaseEntity {
+export class ProductEntity extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -23,6 +23,9 @@ export class Product extends BaseEntity {
 
   @Column()
   stock: number;
+
+  @Column({ type: "varchar", length: "256", nullable: true })
+  image: string;
 
   @Column({ default: "generic" })
   category: string;

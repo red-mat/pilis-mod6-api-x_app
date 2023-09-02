@@ -4,12 +4,14 @@ import { API_ROOT } from "./shared/environment";
 import productRoute from "./products/routes";
 import { auth, users } from "./users/routes";
 import orderRoute from "./orders/routes"
+import path from 'path'
 
 const ROOT_V1 = API_ROOT + "/v1";
 const app = express();
 
 app.use(morgan("dev"));
 app.use(express.json());
+app.use('/public', express.static(path.join(__dirname, '../storage')));//capture image
 
 app.use(ROOT_V1, auth);
 app.use(ROOT_V1, users);
