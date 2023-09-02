@@ -38,22 +38,23 @@ class Ticket {
 
   private static async getCodes(): Promise<string[]> {
     const currentDate = new Date();
-    const fourHoursAgo = new Date(currentDate.getTime() - EXPIRED_TIME);
+    const expiredLimit = new Date(currentDate.getTime() - EXPIRED_TIME);
 
     const where = {
       status: Status.FINISHED,
-      updatedAt: MoreThan(fourHoursAgo),
+      updatedAt: MoreThan(expiredLimit),
     };
 
     const orders = await Order.findBy(where);
     if (!orders) return [];
 
-    const ordersId = orders.map((o) => o.id);
+    const tickets = [];
+    for (const order of orders) {
+      const ticket = await TicketEntity.findOneBy({ order: order });
+      if (ticket) tickets.push(ticket);
+    }
 
-    const tickets = await TicketEntity.findBy({ order: ordersId });
-    if (!tickets) return [];
-
-    const codes = tickets.map((T) => T.code);
+    const codes = tickets.map((t) => t.code);
     return codes;
   }
 
