@@ -1,4 +1,4 @@
-import { Product } from "@/products/core/ProductEntity";
+import { ProductEntity } from "@/products/core/ProductEntity";
 import { Order } from "./OrderEntity";
 import { BodyOrder, OrderItem } from "../../products/core/types";
 import { UserEntity } from "@/users/core";
@@ -23,7 +23,7 @@ export default class OrderService {
   };
 
   async _findProduct(id: string) {
-    return Product.findOneBy({ id: id })
+    return ProductEntity.findOneBy({ id: id })
   };
 
   async _validateProductAndBuildDetail(products: BodyOrder[]) {

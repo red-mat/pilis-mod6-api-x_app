@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { Product } from "../core/ProductEntity";
-import ProductService from "../core/product";
+import { ProductEntity } from "../core/ProductEntity";
+import Product from "../core/product";
 
 
 export const get = async (req: Request, res: Response) => {
   const id: string = req.params.productId;
   try {
     if (id) {
-      const getProduct = await new ProductService().get(id)
+      const getProduct = await new Product().get(id)
       if (!getProduct) return res.send("The product not exist");
       return res.status(200).json(getProduct);
     }
     else {
-      const products: Product[] = await Product.find();
+      const products: ProductEntity[] = await ProductEntity.find();
       return res.json(products);
     }
   } catch (error) {
@@ -21,9 +21,10 @@ export const get = async (req: Request, res: Response) => {
 };
 
 export const create = async (req: Request, res: Response) => {
+
   try {
-    const createProduct = await new ProductService().create(req.body)
-    return res.status(200).json(createProduct);
+    const createProduct = await new Product().create(req.body, req.file)
+    res.status(200).json(createProduct)
   } catch (error: any) {
     res.status(500).json(error.message);
   }
@@ -32,7 +33,7 @@ export const create = async (req: Request, res: Response) => {
 export const update = async (req: Request, res: Response) => {
   const id = req.params.productId
   try {
-    await new ProductService().update(id, req.body)
+    await new Product().update(req.body, req.file, id)
     return res.status(200).json({ msg: "Product updated" });
 
   } catch (error: any) {
@@ -43,7 +44,7 @@ export const update = async (req: Request, res: Response) => {
 export const destroy = async (req: Request, res: Response) => {
   const id: string = req.params.productId;
   try {
-    await new ProductService().delete(id)
+    await new Product().delete(id)
 
     res.status(200).json({ mensaje: "Product deleted" });
   } catch (error: any) {

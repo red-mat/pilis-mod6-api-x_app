@@ -13,3 +13,9 @@ export type OrderItem = {
   orderDetail?: OrderDetail[];
   products: BodyOrder[];
 };
+
+export type DataImage = {
+  folder: string;
+  file: any;
+  productId: string
+}

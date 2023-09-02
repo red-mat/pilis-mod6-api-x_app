@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from "typeorm"
 import { Order } from "./OrderEntity"
-import { Product } from "@/products/core/ProductEntity"
+import { ProductEntity } from "@/products/core/ProductEntity"
 
 @Entity()
 export class OrderDetail extends BaseEntity {
@@ -29,6 +29,6 @@ export class OrderDetail extends BaseEntity {
   @ManyToOne(() => Order, (order: Order) => order.orderDetail)
   order: Order
 
-  @ManyToOne(() => Product, (product: Product) => product.orderDetail)
-  product: Product
+  @ManyToOne(() => ProductEntity, (product: ProductEntity) => product.orderDetail)
+  product: ProductEntity
 };
