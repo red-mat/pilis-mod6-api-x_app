@@ -10,7 +10,7 @@ const LENGTH_CODE = 4;
 class Ticket {
   private readonly entity: TicketEntity;
 
-  private constructor(entity: TicketEntity) {
+  constructor(entity: TicketEntity) {
     this.entity = entity;
   }
 
