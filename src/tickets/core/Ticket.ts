@@ -28,7 +28,7 @@ class Ticket {
       const order = await Order.findOneBy(where);
       if (!order) return null;
 
-      return null;
+      return order;
     } catch (error) {
       console.log(error);
 
