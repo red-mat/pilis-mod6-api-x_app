@@ -1,6 +1,7 @@
+import { Order } from "@/orders/core/OrderEntity";
+import { Status } from "@/orders/core/constans";
 import { Request, Response } from "express";
 import { Ticket } from "../core";
-import { Order } from "@/orders/core/OrderEntity";
 
 function body(message: string) {
   return { message };
@@ -12,9 +13,16 @@ async function generateTicket(req: Request, res: Response) {
 
   const order = await Order.findOneBy({ id: orderId });
   if (!order) return res.status(404).send(body("order not found, invalid id"));
+  if (order.status !== Status.FINISHED)
+    return res.status(403).send(body("Order not finished"));
 
   const ticket = await Ticket.Generate(orderId);
-  if (!ticket) return res.status(403).send(body("Order is Expired"));
+  if (!ticket)
+    return res
+      .status(403)
+      .send(
+        body("The order is expired or there is already a ticket with its id")
+      );
 
   return res.send(ticket.dto());
 }
