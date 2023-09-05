@@ -71,7 +71,12 @@ class Ticket {
     const ticket = new TicketEntity();
     ticket.order = order;
     ticket.code = await this.generateCode();
-    await ticket.save();
+    try {
+      await ticket.save();
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
 
     return new Ticket(ticket);
   }
