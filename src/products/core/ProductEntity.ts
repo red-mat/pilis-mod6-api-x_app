@@ -6,19 +6,16 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
   OneToMany,
 } from "typeorm";
 
 
 @Entity()
-export class Product extends BaseEntity {
+export class ProductEntity extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ type: "varchar", length: "256" })
   name: string;
 
   @Column()
@@ -26,6 +23,12 @@ export class Product extends BaseEntity {
 
   @Column()
   stock: number;
+
+  @Column({ type: "varchar", length: "256", nullable: true })
+  image: string;
+
+  @Column({ default: "generic" })
+  category: string;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -1,9 +1,9 @@
-import { Product } from "@/products/core/Entity";
+import { ProductEntity } from "@/products/core/ProductEntity";
 import { Order } from "./OrderEntity";
-import { BodyOrder, OrderItem } from "./types";
+import { BodyOrder, OrderItem } from "../../products/core/types";
 import { UserEntity } from "@/users/core";
 import { OrderDetail } from "./OrderDetailEntity";
-import { statuses } from "./constans";
+import { Status, statuses } from "./constans";
 
 export default class OrderService {
 
@@ -23,7 +23,7 @@ export default class OrderService {
   };
 
   async _findProduct(id: string) {
-    return Product.findOneBy({ id: id })
+    return ProductEntity.findOneBy({ id: id })
   };
 
   async _validateProductAndBuildDetail(products: BodyOrder[]) {
@@ -61,7 +61,6 @@ export default class OrderService {
       let orderDetailList = await this._validateProductAndBuildDetail(products);
 
       const newOrder = new Order();
-      newOrder.user = user.id;
       await newOrder.save();
 
       for (const detail of orderDetailList) {
@@ -76,20 +75,23 @@ export default class OrderService {
   };
 
   async update(orderId: string, data: any) {
-    const { status } = data
+    const { status } = data;
     try {
-
       const order = await this.get(orderId);
 
       if (!order) throw new Error("The order no exist");
+      if (!statuses.includes(status.toLowerCase()))
+        throw new Error("The status is wrong ");
+      if (order.status === status.toLowerCase())
+        throw new Error("The order already has that status");
+      if (order.status === Status.FINISHED)
+        throw new Error("Can not update a completed order");
+      if (order.status === Status.PENDING && status.toLowerCase() === Status.FINISHED)
+        throw new Error("Can not finalize a pending order");
 
-      for (let i = 0; i < statuses.length; i++) {
-        if (!statuses.includes(status)) {
-          throw new Error("The status is wrong ");
-        }
-        order.status = status;
-        await Order.save(order);
-      }
+      order.status = status;
+      await Order.save(order);
+
     } catch (error: any) {
       throw error;
     };

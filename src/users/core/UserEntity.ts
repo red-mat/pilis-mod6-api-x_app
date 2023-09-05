@@ -2,11 +2,9 @@ import {
   BaseEntity,
   Entity,
   PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
+  Column
 } from "typeorm";
 import { UserModel } from "./types";
-import { Order } from "@/orders/core/OrderEntity";
 
 @Entity({ name: "user" })
 class UserEntity extends BaseEntity implements UserModel {
@@ -24,8 +22,7 @@ class UserEntity extends BaseEntity implements UserModel {
 
   @Column({ type: "varchar", length: 255, nullable: true })
   avatar: string | null;
-  @OneToMany(() => Order, (order: Order) => order.user)
-  order: Order;
+
 }
 
 export default UserEntity;

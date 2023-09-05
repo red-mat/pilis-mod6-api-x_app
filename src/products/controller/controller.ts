@@ -1,71 +1,53 @@
 import { Request, Response } from "express";
-import { Product } from "../core/Entity";
-import { ItemProduct } from "./product";
+import { ProductEntity } from "../core/ProductEntity";
+import Product from "../core/product";
 
 
-export const getProduct = async (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const id: string = req.params.productId;
-
   try {
-    const products: Product[] = await Product.find();
-    if (products.length > 0 && id) {
-      const getProduct: Product = products.find(product => product.id === id) as Product;
+    if (id) {
+      const getProduct = await new Product().get(id)
       if (!getProduct) return res.send("The product not exist");
       return res.status(200).json(getProduct);
     }
-    return res.json(products);
+    else {
+      const products: ProductEntity[] = await ProductEntity.find();
+      return res.json(products);
+    }
   } catch (error) {
     res.status(500).json({ message: error });
   }
 };
 
-export const createProduct = async (req: Request, res: Response) => {
-  const { name, price, stock }: ItemProduct = req.body;
+export const create = async (req: Request, res: Response) => {
 
   try {
-    const newProduct: Product = new Product();
-    newProduct.name = name;
-    newProduct.price = price;
-    newProduct.stock = stock;
-    await newProduct.save();
-
-    return res.status(200).json(newProduct);
-  } catch (error) {
-    res.status(500).json({ message: error });
+    const createProduct = await new Product().create(req.body, req.file)
+    res.status(200).json(createProduct)
+  } catch (error: any) {
+    res.status(500).json(error.message);
   }
 };
 
-export const updateProduct = async (req: Request, res: Response) => {
-  const id: string = req.params.productId;
-  const { name, price, stock }: ItemProduct = req.body;
-
+export const update = async (req: Request, res: Response) => {
+  const id = req.params.productId
   try {
-    const productValidate: Product | null = await Product.findOneBy({ id: id })
-    if (!productValidate) return res.status(404).json({ message: "The product no exist" });
-
-    await Product.update({ id: productValidate.id }, {
-      name,
-      price,
-      stock
-    });
-
+    await new Product().update(req.body, req.file, id)
     return res.status(200).json({ msg: "Product updated" });
-  } catch (error) {
-    res.status(500).json({ message: error });
+
+  } catch (error: any) {
+    res.status(500).json(error.message);
   };
 }
 
-export const deleteProduct = async (req: Request, res: Response) => {
+export const destroy = async (req: Request, res: Response) => {
   const id: string = req.params.productId;
-
   try {
-    const productValidate: Product | null = await Product.findOneBy({ id: id });
-    if (!productValidate) return res.status(404).json({ message: "The product no exist" });
-
-    await Product.delete({ id: productValidate.id });
+    await new Product().delete(id)
 
     res.status(200).json({ mensaje: "Product deleted" });
-  } catch (error) {
-    return res.status(500).json({ message: error });
+  } catch (error: any) {
+    return res.status(500).json(error.message);
   };
 };
