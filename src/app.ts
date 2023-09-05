@@ -3,8 +3,10 @@ import morgan from "morgan";
 import { API_ROOT } from "./shared/environment";
 import productRoute from "./products/routes";
 import { auth, users } from "./users/routes";
-import orderRoute from "./orders/routes"
+import orderRoute from "./orders/routes";
+import ticketRoute from "./tickets/routes";
 import path from 'path'
+
 
 const ROOT_V1 = API_ROOT + "/v1";
 const app = express();
@@ -15,7 +17,7 @@ app.use('/public', express.static(path.join(__dirname, '../storage')));//capture
 
 app.use(ROOT_V1, auth);
 app.use(ROOT_V1, users);
-app.use(ROOT_V1, productRoute)
-app.use(ROOT_V1, orderRoute)
-
+app.use(ROOT_V1, productRoute);
+app.use(ROOT_V1, orderRoute);
+app.use(ROOT_V1, ticketRoute);
 export default app;
