@@ -6,12 +6,16 @@ function body(message: string) {
 }
 
 async function deliver(req: Request, res: Response) {
-  const { ticketId } = req.body;
-  const ticket = await Ticket.Find(ticketId);
+  const { ticketId } = req.params;
 
+  if (!ticketId) return res.status(400).send(body("send ticket id"));
+
+  const ticket = await Ticket.Find(ticketId);
   if (!ticket) return res.status(404).send(body("ticket not found"));
+
   if (ticket.isDelivered())
     return res.status(403).send(body("it was delivered"));
+
   if (ticket.isExpired())
     return res.status(403).send(body("The ticket has expired"));
 
