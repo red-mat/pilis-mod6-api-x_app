@@ -5,8 +5,9 @@ const PATH = "/tickets";
 
 const ticketRoute = Router();
 
+ticketRoute.get(PATH, getTickets);
+
 const pathPost = `${PATH}/:orderId`;
 ticketRoute.post(pathPost, generateTicket);
-ticketRoute.get(PATH, getTickets);
 
 export default ticketRoute;
