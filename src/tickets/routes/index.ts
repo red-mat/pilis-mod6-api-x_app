@@ -1,6 +1,6 @@
 import { authenticate } from "@/users/middleware/authenticate";
 import { Router } from "express";
-import { deliver, generateTicket, getTickets } from "../controllers";
+import { deliver, generateTicket, getTickets, refresh } from "../controllers";
 
 const PATH = "/tickets";
 
@@ -13,5 +13,8 @@ ticketRoute.post(pathPost, generateTicket);
 
 const pathDeliver = `${PATH}/deliver/:ticketId`;
 ticketRoute.put(pathDeliver, authenticate, deliver);
+
+const pathRefresh = `${PATH}/refresh/:ticketId`;
+ticketRoute.put(pathRefresh, refresh);
 
 export default ticketRoute;
