@@ -13,7 +13,7 @@ async function deliver(req: Request, res: Response) {
   if (ticket.isDelivered())
     return res.status(403).send(body("it was delivered"));
   if (ticket.isExpired())
-    return res.status(403).send(body("The ticket has expired or is not valid"));
+    return res.status(403).send(body("The ticket has expired"));
 
   await ticket.deliver();
   return res.send(body("Successful delivery"));
