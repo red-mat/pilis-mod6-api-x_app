@@ -77,7 +77,10 @@ class Ticket {
   }
 
   static async Find(id: string): Promise<Ticket | null> {
-    const ticket = await TicketEntity.findOneBy({ id });
+    const ticket = await TicketEntity.findOne({
+      where: { id },
+      relations: ["order"],
+    });
     if (!ticket) return null;
 
     return new Ticket(ticket);
