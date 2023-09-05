@@ -104,6 +104,18 @@ class Ticket {
     await this.entity.save();
   }
 
+  isDelivered(): boolean {
+    return this.entity.isDelivered;
+  }
+
+  async deliver() {
+    if (this.isExpired()) return;
+    if (this.isDelivered()) return;
+
+    this.entity.isDelivered = true;
+    await this.entity.save();
+  }
+
   dto() {
     const id = this.entity.id;
     const isExpired = this.isExpired();
