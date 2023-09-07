@@ -1,7 +1,13 @@
-import ENV from "@/shared/environment";
 import { DataSource } from "typeorm";
 
-const ENTITY_PATHS = "src/*/core/**/*Entity.ts";
+import ENV from "@/shared/environment";
+import { UserEntity } from "@/users/core";
+import { ProductEntity } from "@/products/core/ProductEntity";
+import { Order } from "@/orders/core/OrderEntity";
+import { TicketEntity } from "@/tickets/core";
+import { OrderDetail } from "@/orders/core/OrderDetailEntity";
+
+const ENTITY = [UserEntity, ProductEntity, Order, TicketEntity, OrderDetail];
 
 const AppDataSource = new DataSource({
   type: "mysql",
@@ -11,7 +17,7 @@ const AppDataSource = new DataSource({
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
   synchronize: true,
-  entities: [ENTITY_PATHS],
+  entities: ENTITY,
 });
 
 export default AppDataSource;
