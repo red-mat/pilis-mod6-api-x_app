@@ -91,6 +91,22 @@ class Ticket {
     return new Ticket(ticket);
   }
 
+  static async FindByCode(code: string): Promise<Ticket | null> {
+    const tickets = await TicketEntity.find({
+      where: { code },
+      relations: ["order"],
+    });
+
+    if (!tickets.length) return null;
+
+    const ticket = tickets
+      .map((t) => new Ticket(t))
+      .filter((t) => t.isExpired())[0];
+    if (!ticket) return null;
+
+    return ticket;
+  }
+
   isExpired(): boolean {
     const order = this.entity.order as Order;
     const currentTime = new Date().getTime();

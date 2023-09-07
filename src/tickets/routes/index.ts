@@ -4,6 +4,7 @@ import {
   deliver,
   generateTicket,
   getTicket,
+  getTicketByCode,
   getTickets,
   refresh,
 } from "../controllers";
@@ -16,6 +17,9 @@ ticketRoute.get(PATH, getTickets);
 
 const pathGetTicket = `${PATH}/:ticketId`;
 ticketRoute.get(pathGetTicket, getTicket);
+
+const pathGetTicketByCode = `${PATH}/code/:code`;
+ticketRoute.get(pathGetTicketByCode, authenticate, getTicketByCode);
 
 const pathPost = `${PATH}/:orderId`;
 ticketRoute.post(pathPost, generateTicket);
