@@ -155,10 +155,11 @@ class Ticket {
   detailDto() {
     const order = this.entity.order as Order;
 
-    const id = this.entity.id;
+    const ticketId = this.entity.id;
+    const code = this.entity.code;
     const detail = order.orderDetail;
 
-    return { id, detail };
+    return { ticketId, code, detail };
   }
 }
 
