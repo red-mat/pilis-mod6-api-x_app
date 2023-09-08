@@ -6,6 +6,7 @@ import TicketEntity from "./TicketEntity";
 
 const EXPIRED_TIME = 4 * 60 * 60 * 1000;
 const LENGTH_CODE = 4;
+const RELATIONS = ["order", "order.orderDetail"];
 
 class Ticket {
   private readonly entity: TicketEntity;
@@ -25,7 +26,7 @@ class Ticket {
     };
 
     try {
-      const order = await Order.findOneBy(where);
+      const order = await Order.findOne({ where, relations: RELATIONS });
       if (!order) return null;
 
       return order;
@@ -84,7 +85,7 @@ class Ticket {
   static async Find(id: string): Promise<Ticket | null> {
     const ticket = await TicketEntity.findOne({
       where: { id },
-      relations: ["order"],
+      relations: RELATIONS,
     });
     if (!ticket) return null;
 
@@ -94,7 +95,7 @@ class Ticket {
   static async FindByCode(code: string): Promise<Ticket | null> {
     const tickets = await TicketEntity.find({
       where: { code },
-      relations: ["order"],
+      relations: RELATIONS,
     });
 
     if (!tickets.length) return null;
@@ -138,14 +139,27 @@ class Ticket {
   }
 
   dto() {
+    const order = this.entity.order as Order;
+
     const id = this.entity.id;
     const isExpired = this.isExpired();
-    const orderId = (this.entity.order as Order).id;
+    const orderId = order.id;
     const createAt = this.entity.createdAt;
     const isDelivered = this.entity.isDelivered;
     const code = this.entity.code;
+    const detail = order.orderDetail;
 
-    return { id, createAt, isDelivered, isExpired, code, orderId };
+    return { id, createAt, isDelivered, isExpired, code, orderId, detail };
+  }
+
+  detailDto() {
+    const order = this.entity.order as Order;
+
+    const ticketId = this.entity.id;
+    const code = this.entity.code;
+    const detail = order.orderDetail;
+
+    return { ticketId, code, detail };
   }
 }
 
