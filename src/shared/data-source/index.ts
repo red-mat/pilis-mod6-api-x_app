@@ -10,7 +10,7 @@ import { OrderDetail } from "@/orders/core/OrderDetailEntity";
 const ENTITY = [UserEntity, ProductEntity, Order, TicketEntity, OrderDetail];
 
 const AppDataSource = new DataSource({
-  type: "mysql",
+  type: ENV.DB_TYPE,
   host: ENV.DB_HOST,
   port: Number(ENV.DB_PORT),
   username: "root",
