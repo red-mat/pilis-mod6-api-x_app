@@ -18,6 +18,7 @@ const AppDataSource = new DataSource({
   database: ENV.DB_NAME,
   synchronize: true,
   entities: ENTITY,
+  ssl: ENV.DB_SSL,
 });
 
 export default AppDataSource;
