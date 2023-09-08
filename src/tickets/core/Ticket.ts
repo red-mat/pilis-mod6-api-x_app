@@ -101,7 +101,7 @@ class Ticket {
 
     const ticket = tickets
       .map((t) => new Ticket(t))
-      .filter((t) => t.isExpired())[0];
+      .filter((t) => !t.isExpired())[0];
     if (!ticket) return null;
 
     return ticket;
