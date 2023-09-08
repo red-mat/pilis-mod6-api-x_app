@@ -12,7 +12,7 @@ const ENTITY = [UserEntity, ProductEntity, Order, TicketEntity, OrderDetail];
 const AppDataSource = new DataSource({
   type: ENV.DB_TYPE,
   host: ENV.DB_HOST,
-  port: Number(ENV.DB_PORT),
+  port: ENV.DB_PORT,
   username: ENV.DB_USER,
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
