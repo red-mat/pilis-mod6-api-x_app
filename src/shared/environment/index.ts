@@ -10,6 +10,7 @@ export const API_ROOT = env.API_ROOT ?? "/";
 
 export const DB_HOST = env.DB_HOST ?? "localhost";
 export const DB_PORT = Number(env.DB_PORT ?? 3306);
+export const DB_SSL = Boolean(Number(env.DB_SSL ?? 0));
 export const DB_NAME = env.DB_NAME ?? "db";
 export const DB_USER = env.DB_USER ?? "root";
 export const DB_PASS = env.DB_PASS ?? "password";
@@ -20,6 +21,7 @@ const ENV: Environment = {
   API_PORT,
   API_ROOT,
   DB_HOST,
+  DB_SSL,
   DB_TYPE,
   DB_PORT,
   DB_NAME,

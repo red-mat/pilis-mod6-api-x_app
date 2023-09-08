@@ -5,6 +5,7 @@ export interface Environment {
   DB_TYPE: TypeConfection;
   DB_HOST: string;
   DB_PORT: number;
+  DB_SSL: boolean;
   DB_NAME: string;
   DB_USER: string;
   DB_PASS: string;
