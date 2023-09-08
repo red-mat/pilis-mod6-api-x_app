@@ -7,9 +7,9 @@ async function getTicketByCode(req: Request, res: Response) {
   const { code } = req.params;
 
   const ticket = await Ticket.FindByCode(code);
-  if (!ticket) return res.status(400).send(body("Ticket valid not found"));
+  if (!ticket) return res.status(400).send(body("invalid ticket or not found"));
 
-  return res.send(ticket.dto());
+  return res.send(ticket.detailDto());
 }
 
 export default getTicketByCode;
