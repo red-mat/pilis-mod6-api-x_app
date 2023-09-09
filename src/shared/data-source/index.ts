@@ -10,14 +10,15 @@ import { OrderDetail } from "@/orders/core/OrderDetailEntity";
 const ENTITY = [UserEntity, ProductEntity, Order, TicketEntity, OrderDetail];
 
 const AppDataSource = new DataSource({
-  type: "mysql",
+  type: ENV.DB_TYPE,
   host: ENV.DB_HOST,
-  port: Number(ENV.DB_PORT),
-  username: "root",
+  port: ENV.DB_PORT,
+  username: ENV.DB_USER,
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
   synchronize: true,
   entities: ENTITY,
+  ssl: ENV.DB_SSL,
 });
 
 export default AppDataSource;

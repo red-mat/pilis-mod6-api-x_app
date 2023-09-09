@@ -19,6 +19,7 @@ class Ticket {
     const currentDate = new Date();
     const fourHoursAgo = new Date(currentDate.getTime() - EXPIRED_TIME);
 
+    const relations = ["orderDetail"];
     const where = {
       id,
       status: Status.FINISHED,
@@ -26,7 +27,7 @@ class Ticket {
     };
 
     try {
-      const order = await Order.findOne({ where, relations: RELATIONS });
+      const order = await Order.findOne({ where, relations });
       if (!order) return null;
 
       return order;
