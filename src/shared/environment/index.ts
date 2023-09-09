@@ -7,6 +7,8 @@ const env = process.env as Partial<Environment>;
 
 export const API_PORT = Number(env.API_PORT);
 export const API_ROOT = env.API_ROOT ?? "/";
+export const API_HOST =
+  env.API_HOST ?? `http://localhost:${API_PORT}${API_ROOT}`;
 
 export const DB_HOST = env.DB_HOST ?? "localhost";
 export const DB_PORT = Number(env.DB_PORT ?? 3306);
@@ -20,6 +22,7 @@ export const JWT_SECRET_KEY = env.JWT_SECRET_KEY ?? "secret_key";
 const ENV: Environment = {
   API_PORT,
   API_ROOT,
+  API_HOST,
   DB_HOST,
   DB_SSL,
   DB_TYPE,

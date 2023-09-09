@@ -2,6 +2,7 @@ export type TypeConfection = "mysql" | "postgres";
 export interface Environment {
   API_PORT: number;
   API_ROOT: string;
+  API_HOST: string;
   DB_TYPE: TypeConfection;
   DB_HOST: string;
   DB_PORT: number;
