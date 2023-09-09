@@ -19,7 +19,7 @@ class Ticket {
     const currentDate = new Date();
     const fourHoursAgo = new Date(currentDate.getTime() - EXPIRED_TIME);
 
-    const relations = ["order_detail"];
+    const relations = ["orderDetail"];
     const where = {
       id,
       status: Status.FINISHED,
