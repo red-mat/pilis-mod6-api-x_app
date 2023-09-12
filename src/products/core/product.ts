@@ -43,7 +43,7 @@ export default class Product {
   };
 
   async update(data: ItemProduct, file: any, productId: string) {
-    const { name, price, stock } = data;
+    const { name, price, stock, category } = data;
     const product = await this.get(productId);
     if (!product) throw new Error("The product no exist");
     if (file) {
@@ -58,13 +58,15 @@ export default class Product {
         name,
         price,
         stock,
-        image: newImage
+        image: newImage,
+        category
       });
     }
     await ProductEntity.update({ id: product.id }, {
       name,
       price,
       stock,
+      category
     });
   };
 
