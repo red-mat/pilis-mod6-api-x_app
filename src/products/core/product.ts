@@ -3,16 +3,24 @@ import { ItemProduct } from "../controller/product";
 import { saveImage } from "../service/productService";
 import { ProductEntity } from "./ProductEntity";
 import path from "path";
+import { OrderDetail } from "@/orders/core/OrderDetailEntity";
+import { Order } from "@/orders/core/OrderEntity";
+import OrderService from "@/orders/core/order";
 
 
 export default class Product {
 
   async getList() {
-    return ProductEntity.find();
+    return ProductEntity.find({
+      relations: ["orderDetail"]
+    });
   };
 
   async get(productId: string) {
-    return ProductEntity.findOneBy({ id: productId });
+    return ProductEntity.findOne({
+      where: { id: productId },
+      relations: ["orderDetail"]
+    });
   };
 
   async create(data: ItemProduct, file: any) {
@@ -73,6 +81,17 @@ export default class Product {
   async delete(productId: string) {
     const product = await this.get(productId);
     if (!product) throw new Error("The product no exist");
+    const orderDetail: any = product.orderDetail;
+
+    if (orderDetail.length > 0) {
+      for (const iterator of orderDetail) {
+        const orderDetail = await new OrderService().getDetail(iterator.id)
+        if (!orderDetail) return
+
+        orderDetail.product = null;
+        orderDetail.save();
+      };
+    };
     await ProductEntity.delete({ id: product.id });
     const pathImage = path.join(__dirname, `../../../storage/${product.image}`)
     if (Storage.exists(pathImage)) {

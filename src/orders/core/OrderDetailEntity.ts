@@ -30,5 +30,5 @@ export class OrderDetail extends BaseEntity {
   order: Order
 
   @ManyToOne(() => ProductEntity, (product: ProductEntity) => product.orderDetail)
-  product: ProductEntity
+  product: ProductEntity | null
 };
