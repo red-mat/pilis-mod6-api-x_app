@@ -22,6 +22,14 @@ export default class OrderService {
     return order;
   };
 
+  async getDetail(id: string) {
+    const ordeDetail = await OrderDetail.findOne({
+      where: { id: id },
+      relations: ["product"]
+    })
+    return ordeDetail;
+  };
+
   async _findProduct(id: string) {
     return ProductEntity.findOneBy({ id: id })
   };
