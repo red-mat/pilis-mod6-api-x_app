@@ -22,6 +22,12 @@ export class Order extends BaseEntity {
   })
   status: Status;
 
+  @Column({ type: "varchar", length: 4 })
+  code: string;
+
+  @Column({ default: false })
+  isDelivered: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
