@@ -4,10 +4,9 @@ import ENV from "@/shared/environment";
 import { UserEntity } from "@/users/core";
 import { ProductEntity } from "@/products/core/ProductEntity";
 import { Order } from "@/orders/core/OrderEntity";
-import { TicketEntity } from "@/tickets/core";
 import { OrderDetail } from "@/orders/core/OrderDetailEntity";
 
-const ENTITY = [UserEntity, ProductEntity, Order, TicketEntity, OrderDetail];
+const ENTITY = [UserEntity, ProductEntity, Order, OrderDetail];
 
 const AppDataSource = new DataSource({
   type: ENV.DB_TYPE,
