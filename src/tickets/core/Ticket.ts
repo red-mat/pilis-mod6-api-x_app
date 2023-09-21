@@ -152,16 +152,6 @@ class Ticket {
 
     return { id, createAt, isDelivered, isExpired, code, orderId, detail };
   }
-
-  detailDto() {
-    const order = this.entity.order as Order;
-
-    const ticketId = this.entity.id;
-    const code = this.entity.code;
-    const detail = order.orderDetail;
-
-    return { ticketId, code, detail };
-  }
 }
 
 export default Ticket;
