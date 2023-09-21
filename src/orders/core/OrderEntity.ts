@@ -22,7 +22,7 @@ export class Order extends BaseEntity {
   })
   status: Status;
 
-  @Column({ type: "varchar", length: 4 })
+  @Column({ type: "varchar", length: 4, default: "" })
   code: string;
 
   @Column({ default: false })
