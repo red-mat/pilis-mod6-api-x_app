@@ -15,8 +15,8 @@ const router: Router = Router();
 
 router.get("/order", authenticate, get);
 router.get("/order/code/:code", authenticate, getOrderByCode);
+router.get("/trash/order", authenticate, getTrash);
 router.get("/order/:orderId", get);
-router.get("/order/trash", authenticate, getTrash);
 
 router.post("/order", create);
 
