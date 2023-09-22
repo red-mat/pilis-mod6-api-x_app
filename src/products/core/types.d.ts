@@ -1,7 +1,7 @@
 import { OrderDetail } from "../../orders/core/OrderDetailEntity";
 
 export type BodyOrder = {
-  productId: string;
+  id: string;
   quantity: number;
 };
 
@@ -17,5 +17,5 @@ export type OrderItem = {
 export type DataImage = {
   folder: string;
   file: any;
-  productId: string
-}
+  productId: string;
+};

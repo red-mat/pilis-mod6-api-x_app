@@ -42,7 +42,7 @@ export default class OrderService {
     const uniqueProducts = new Set();
 
     for (let i = 0; i < products.length; i++) {
-      const product = await this._findProduct(products[i].productId);
+      const product = await this._findProduct(products[i].id);
       if (product) {
         const detail = new OrderDetail();
         detail.description = product.name;
