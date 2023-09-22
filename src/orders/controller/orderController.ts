@@ -19,6 +19,17 @@ export const get = async (req: Request, res: Response) => {
   }
 };
 
+export const getTrash = async (_req: Request, res: Response) => {
+  try {
+    const orders = await OrderService.GetTrash();
+    const ordersDto = orders.map((o) => o.dto());
+    return res.send(ordersDto);
+  } catch (error) {
+    console.error(error);
+    return res.sendStatus(500);
+  }
+};
+
 export const getOrderByCode = async (req: Request, res: Response) => {
   const { code } = req.params;
   try {
@@ -102,4 +113,22 @@ export const deliverOrder = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json(error);
   }
+};
+
+export const clean = async (_req: Request, res: Response) => {
+  const orderDeleted = [];
+  try {
+    let orders = await OrderService.GetList();
+    if (orders.length === 0) return res.status(200);
+    orders = orders.filter((o) => o.isDelivered() || o.isExpired());
+
+    for (const order of orders) {
+      await order.delete();
+      orderDeleted.push(order.dto().id);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  res.send(orderDeleted);
 };

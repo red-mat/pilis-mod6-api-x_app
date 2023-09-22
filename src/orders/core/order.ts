@@ -90,8 +90,17 @@ export default class OrderService {
     }
   }
 
+  static async GetTrash() {
+    const orders: Order[] = await Order.find({
+      where: { isDeleted: true },
+      relations: ["orderDetail"],
+    });
+    return orders.map((o) => new OrderService(o));
+  }
+
   static async GetList() {
     const orders: Order[] = await Order.find({
+      where: { isDeleted: false },
       relations: ["orderDetail"],
     });
     return orders.map((o) => new OrderService(o));
@@ -99,7 +108,7 @@ export default class OrderService {
 
   static async Find(id: string) {
     const order = await Order.findOne({
-      where: { id: id },
+      where: { id, isDeleted: false },
       relations: ["orderDetail"],
     });
     if (!order) return null;
@@ -109,7 +118,7 @@ export default class OrderService {
   static async FindByCode(code: string) {
     if (code.length !== 4) return null;
     const orders = await Order.find({
-      where: { code },
+      where: { code, isDeleted: false },
       relations: ["orderDetail"],
     });
 
@@ -150,6 +159,11 @@ export default class OrderService {
     } catch (error: any) {
       throw error;
     }
+  }
+
+  async delete() {
+    this.entity.isDeleted = true;
+    await this.entity.save();
   }
 
   async refreshCode() {

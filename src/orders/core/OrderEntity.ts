@@ -28,6 +28,9 @@ export class Order extends BaseEntity {
   @Column({ default: false })
   isDelivered: boolean;
 
+  @Column({ default: false })
+  isDeleted: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
