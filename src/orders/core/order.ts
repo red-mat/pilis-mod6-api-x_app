@@ -77,6 +77,7 @@ export default class OrderService {
 
       const order = new Order();
       order.code = await this.generateCode();
+      order.updatedAt = new Date();
       await order.save();
 
       for (const detail of orderDetailList) {
@@ -155,6 +156,7 @@ export default class OrderService {
         throw new Error("Can not finalize a pending order");
 
       order.status = status;
+      order.updatedAt = new Date();
       await Order.save(order);
     } catch (error: any) {
       throw error;
@@ -163,7 +165,7 @@ export default class OrderService {
 
   async delete() {
     this.entity.isDeleted = true;
-    await this.entity.save();
+    await this.entity.save({ reload: false });
   }
 
   async refreshCode() {

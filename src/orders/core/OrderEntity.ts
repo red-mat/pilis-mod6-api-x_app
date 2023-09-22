@@ -34,7 +34,7 @@ export class Order extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @Column({ type: "datetime" })
   updatedAt: Date;
 
   @OneToMany(() => OrderDetail, (orderDetail: OrderDetail) => orderDetail.order)
