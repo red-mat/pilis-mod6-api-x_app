@@ -24,6 +24,6 @@ router.put("/order/:orderId", update);
 router.put("/order/refresh/:orderId", refreshCode);
 router.put("/order/deliver/:orderId", authenticate, deliverOrder);
 
-router.delete("/order/deliver", authenticate, clean);
+router.delete("/order", authenticate, clean);
 
 export default router;
