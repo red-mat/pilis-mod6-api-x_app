@@ -7,7 +7,7 @@ export const get = async (req: Request, res: Response) => {
   try {
     if (orderId) {
       const order = await OrderService.Find(orderId);
-      if (!order) return res.send("The order no exist");
+      if (!order) return res.status(404).send("The order no exist");
       return res.status(200).json(order.dto());
     }
     const orderList = await OrderService.GetList();
